@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dddd5bv4ecc6u"]
+
+[ext_resource type="Script" path="res://anchor_point.gd" id="1_et07s"]
+
+[node name="AnchorPoint" type="Polygon2D"]
+color = Color(0.221902, 0.221902, 0.221902, 1)
+polygon = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
+script = ExtResource("1_et07s")

@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://di64vvn537uwc"]
+
+[ext_resource type="Script" path="res://little_buddy.gd" id="1_tr0u6"]
+[ext_resource type="Texture2D" uid="uid://i32gpt1vcf4w" path="res://Godot_icon.svg.png" id="1_w3chv"]
+[ext_resource type="Shader" path="res://little_buddy.gdshader" id="2_h1g58"]
+[ext_resource type="Texture2D" uid="uid://05q7qk6j7icu" path="res://burn_pattern.png" id="3_0yw0y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lhiyw"]
+radius = 17.5446
+
+[sub_resource type="Gradient" id="Gradient_qhd8j"]
+offsets = PackedFloat32Array(0.0957447, 0.468085, 0.62766, 0.819149, 1)
+colors = PackedColorArray(0.0509804, 0, 0, 1, 0.498039, 0, 0, 1, 0.905632, 0.585106, 0.126199, 1, 1, 1, 0.215686, 1, 1, 1, 0.215686, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_iy5l7"]
+gradient = SubResource("Gradient_qhd8j")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kjpp3"]
+shader = ExtResource("2_h1g58")
+shader_parameter/progress = -1.0
+shader_parameter/width = 0.2
+shader_parameter/timed = false
+shader_parameter/speed = 0.0
+shader_parameter/angle = 0.0
+shader_parameter/paused = false
+shader_parameter/noise = ExtResource("3_0yw0y")
+shader_parameter/colorCurve = SubResource("GradientTexture1D_iy5l7")
+
+[node name="LittleBuddy" type="Node2D"]
+scale = Vector2(0.8, 0.8)
+script = ExtResource("1_tr0u6")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1.25)
+shape = SubResource("CircleShape2D_lhiyw")
+
+[node name="GodotIcon_svg" type="Sprite2D" parent="."]
+z_index = 2000
+material = SubResource("ShaderMaterial_kjpp3")
+scale = Vector2(0.021, 0.021)
+texture = ExtResource("1_w3chv")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
